@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #encoding:utf-8
-#----------------------------------------------
+#-----------------------------------------------------------------------------
 #Copyright © 2016 Zane Muir
 #
 #Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,22 +20,30 @@
 #LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 #IN THE SOFTWARE.
-#----------------------------------------------
+#-----------------------------------------------------------------------------
+try:
+	from psychopy import core, event, visual
+except ImportError,e:
+	from psychopyTest import core, event, visual
 
-from psychopy import core, event, visual
-import os, time
+'''
+function:
+continuous grating corridor
 
-def logMessage(message,isNew=False,logPath=None): #TODO:to add 'isNew' parameter
-	if logPath is None:
-		filePath=os.path.join(os.path.join(os.getcwd(),'Desktop'),time.strftime('%y%m%d')+'_psychopy.txt')
-	else:
-		filePath=logPath
-	logfile=open(filePath,'a')
-	logfile.write(message)
-	logfile.close()
-	return
+parameters:
+TimePointSerial
+gratingSize
+gratingSpatialFreq
+gratingTex
+gratingMask
+gratingColor
+timeCycle
+defaultVel
+timeLog
+logPath
 
-def gratingFourWindows(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,gratingTex='sqr',gratingMask='None',gratingColor=[0.7,0.7,0.7],timeCycle=1,defaultVel=0.1,timeLog=True,logPath=None):
+'''
+def gratingCorridor(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,gratingTex='sqr',gratingMask='None',gratingColor=[0.7,0.7,0.7],timeCycle=1,defaultVel=0.1,timeLog=True,logPath=None):
 	#Window
 	#Left Side
 	win1 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 1, units = "deg", allowGUI = False)
@@ -56,11 +64,14 @@ def gratingFourWindows(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,g
 	setTimePoint=TimePointSerial[0][0]
 	timer=core.Clock()
 	i=1
-	sysMessage='Start\n'
+	#sysMessage='Start\n'
+	sysMessage='Start\n1/'+str(len(TimePointSerial))+'\nSpeed Default\nnext set point: '+str(setTimePoint)
+
 
 	if timeLog:
-		theMessage='new session, '+str(time.time())+'\n'
-		logMessage(theMessage) #TODO:
+		#theMessage='new session, '+str(time.time())+'\n'
+		#logMessage(theMessage)
+		gadget.logMessage(task='ExcelTimeTag')
 
 	while True:
 		if timer.getTime()>=setTimePoint and i<=len(TimePointSerial):
@@ -107,8 +118,6 @@ def gratingFourWindows(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,g
 				win4.close()
 				win5.close()
 				core.quit()
-
-
 
 if __name__ == '__main__':
 	gratingFourWindows([(10,),(10,2)])
