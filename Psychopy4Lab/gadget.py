@@ -51,7 +51,7 @@ def logMessage(message='',isNew=False,logPath=None,task=None,logFileType='csv',t
 
 	#timeTag:
 	if timeTag:
-		logfile.write(time.strftime('%y%m%d-%H%M%S,'))
+		logfile.write(time.strftime('%y%m%d-%H:%M:%S,'))
 
 	#special task:
 	#ExcelTimeTag
