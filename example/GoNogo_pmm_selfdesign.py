@@ -1,6 +1,7 @@
-import goNogoGrating as lab
+from Psychopy4Lab import goNogoGrating as lab
 
-task_sequence=[1.6,1.4,1.2,1,1.6,1.4,1.2,1,1.6,1.4,1.2,1,1.6,1.4,1.2,1]
+#demo
+task_sequence=[1.5,1.5]
 
 if __name__ == '__main__':
 	lab.goNogoGrating(task_sequence)
