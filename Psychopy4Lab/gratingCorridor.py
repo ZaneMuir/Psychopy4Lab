@@ -91,10 +91,10 @@ def gratingCorridor(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,grat
 				sysMessage+='finished\n'
 
 			i+=1
-			sysMessage+='===========================\n'
-
-			os.system('cls')
-			print sysMessage,'\n',timer.getTime()
+			gadget.cleanScreen()
+			print sysMessage
+			print '==========================='
+			print '%0.2f'%timer.getTime()
 
 		grat1.setPhase(vel,'+')
 		grat3.setPhase(vel,'+')

@@ -1,16 +1,13 @@
 import time
 
-start=0
-def initial():
-	global start
-	start=time.time()
+class Clock(object):
+	"""docstring for Clock"""
+	def __init__(self):
+		super(Clock, self).__init__()
+		self.start=time.time()
 
-def Clock():
-	global start
-	if start==0 or start==None:
-		initial()
-
-	return time.time()-start
+	def getTime(self):
+		return time.time()-self.start
 
 def quit():
 	print 'core quit'
