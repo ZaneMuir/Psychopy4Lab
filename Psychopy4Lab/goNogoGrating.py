@@ -82,41 +82,42 @@ def goNogoGrating(TaskSerial=[], windowDuration=10, gratingDuration=5, defaultVe
 	while True:
 		#10*i+5*(i-1)
 		if i<=len(TaskSerial):
-			if core.Clock()>j*(windowDuration+gratingDuration)-gratingDuration:
+			if timer.getTime()>j*(windowDuration+gratingDuration)-gratingDuration:
 				sysMessage=str(j)+'/'+str(len(TaskSerial))+'\n'
 				sysMessage+='grating epoch\n'
 				sysMessage+='next set point: '+str(j*(windowDuration+gratingDuration))
 				vel=defaultVel*TaskSerial[j-1]
-				grat1 = visual.GratingStim(win=win1, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 180, color = gratingColor_Grating)
-				grat3 = visual.GratingStim(win=win3, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 180, color = gratingColor_Grating)
-				#Right Side
-				grat4 = visual.GratingStim(win=win4, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 0, color = gratingColor_Grating)
-				grat5 = visual.GratingStim(win=win5, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 0, color = gratingColor_Grating)
+
+				grat1.color=gratingColor_Grating
+				grat3.color=gratingColor_Grating
+				grat4.color=gratingColor_Grating
+				grat5.color=gratingColor_Grating
+
 				j+=1
-			elif core.Clock()>i*(windowDuration+gratingDuration):
+			elif timer.getTime()>i*(windowDuration+gratingDuration):
 				sysMessage=str(j)+'/'+str(len(TaskSerial))+'\n'
 				sysMessage+='window epoch\n'
 				sysMessage+='next set point: '+str(j*(windowDuration+gratingDuration)-gratingDuration)
-				grat1 = visual.GratingStim(win=win1, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 180, color = gratingColor_Window)
-				grat3 = visual.GratingStim(win=win3, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 180, color = gratingColor_Window)
-				#Right Side
-				grat4 = visual.GratingStim(win=win4, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 0, color = gratingColor_Window)
-				grat5 = visual.GratingStim(win=win5, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 0, color = gratingColor_Window)
+
+				grat1.color=gratingColor_Window
+				grat3.color=gratingColor_Window
+				grat4.color=gratingColor_Window
+				grat5.color=gratingColor_Window
+
 				i+=1
 		elif i<=j:
 			sysMessage='finished'
-			grat1 = visual.GratingStim(win=win1, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 180, color = gratingColor_Window)
-			grat3 = visual.GratingStim(win=win3, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 180, color = gratingColor_Window)
-			#Right Side
-			grat4 = visual.GratingStim(win=win4, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 0, color = gratingColor_Window)
-			grat5 = visual.GratingStim(win=win5, tex=gratingTex,mask=gratingMask, size =gratingSize, sf = gratingSpatialFreq,ori = 0, color = gratingColor_Window)
+			grat1.color=gratingColor_Window
+			grat3.color=gratingColor_Window
+			grat4.color=gratingColor_Window
+			grat5.color=gratingColor_Window
 			i+=1
 
 		#os.system('cls')
 		gadget.cleanScreen()
 		print sysMessage
 		print '======================='
-		print core.Clock()
+		print '%0.2f'%timer.getTime()
 
 		grat1.setPhase(vel,'+')
 		grat3.setPhase(vel,'+')
@@ -142,4 +143,5 @@ def goNogoGrating(TaskSerial=[], windowDuration=10, gratingDuration=5, defaultVe
 				core.quit()
 
 if __name__ == '__main__':
+	#demo
 	goNogoGrating([2,2])#,windowDuration=2,gratingDuration=1)
