@@ -43,7 +43,11 @@ timeLog
 logPath
 
 '''
-def gratingCorridor(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,gratingTex='sqr',gratingMask='None',gratingColor=[0.7,0.7,0.7],timeCycle=1,defaultVel=0.1,timeLog=True,logPath=None):
+
+def null_func(the_input):
+	return the_input
+
+def gratingFourWindows(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,gratingTex='sqr',gratingMask='None',gratingColor=[0.7,0.7,0.7],timeCycle=1,defaultVel=0.1,timeLog=True,logPath=None,vel_func=null_func):
 	#Window
 	#Left Side
 	win1 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 1, units = "deg", allowGUI = False)
@@ -64,14 +68,14 @@ def gratingCorridor(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,grat
 	setTimePoint=TimePointSerial[0][0]
 	timer=core.Clock()
 	i=1
-	#sysMessage='Start\n'
-	sysMessage='Start\n1/'+str(len(TimePointSerial))+'\nSpeed Default\nnext set point: '+str(setTimePoint)
-
+	sysMessage='Start\n'
 
 	if timeLog:
 		#theMessage='new session, '+str(time.time())+'\n'
 		#logMessage(theMessage)
 		gadget.logMessage(task='ExcelTimeTag')
+
+	startTimePoint=time.time()
 
 	while True:
 		if timer.getTime()>=setTimePoint and i<=len(TimePointSerial):
@@ -88,13 +92,18 @@ def gratingCorridor(TimePointSerial,gratingSize=400,gratingSpatialFreq=0.06,grat
 				sysMessage+='next set point '+str(setTimePoint)+'\n'
 
 			except IndexError, e:
+				vel=defaultVel
 				sysMessage+='finished\n'
 
 			i+=1
-			gadget.cleanScreen()
-			print sysMessage
-			print '==========================='
-			print '%0.2f'%timer.getTime()
+			sysMessage+='===========================\n'
+		else:
+			vel = defaultVel
+
+		os.system('cls')
+		print sysMessage,'\n','%.2f'%timer.getTime()
+
+		vel=vel_func(vel,timer.getTime())
 
 		grat1.setPhase(vel,'+')
 		grat3.setPhase(vel,'+')

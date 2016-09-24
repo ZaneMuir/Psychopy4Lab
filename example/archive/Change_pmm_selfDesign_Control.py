@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#encoding:utf-8
 from psychopy import visual, core, event
 import os
 
@@ -52,20 +53,20 @@ timer = core.Clock()
 
 #Windows
 #Left Side
-mywin1 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 1, units = "deg", allowGUI = False)
-mywin3 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 3, units = "deg", allowGUI = False)
+mywin1 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 0, units = "deg", allowGUI = False)
+#mywin3 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 3, units = "deg", allowGUI = False)
 #Right Side
-mywin4 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 4, units = "deg", allowGUI = False)
-mywin5 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 5, units = "deg", allowGUI = False)
+#mywin4 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 4, units = "deg", allowGUI = False)
+#mywin5 = visual.Window(fullscr = True, monitor = "testMonitor", screen = 5, units = "deg", allowGUI = False)
 
 
 #Gratings
 #Left Side
 mygrat1 = visual.GratingStim(win=mywin1, tex=mytex,mask='None', size =mysize, sf = mysf,ori = ori_left, color = mycol)
-mygrat3 = visual.GratingStim(win=mywin3, tex=mytex,mask='None', size =mysize, sf = mysf,ori = ori_left, color = mycol)
+#mygrat3 = visual.GratingStim(win=mywin3, tex=mytex,mask='None', size =mysize, sf = mysf,ori = ori_left, color = mycol)
 #Righy Side
-mygrat4 = visual.GratingStim(win=mywin4, tex=mytex,mask='None', size =mysize, sf = mysf,ori = ori_right, color = mycol)
-mygrat5 = visual.GratingStim(win=mywin5, tex=mytex,mask='None', size =mysize, sf = mysf,ori = ori_right, color = mycol)
+#mygrat4 = visual.GratingStim(win=mywin4, tex=mytex,mask='None', size =mysize, sf = mysf,ori = ori_right, color = mycol)
+#mygrat5 = visual.GratingStim(win=mywin5, tex=mytex,mask='None', size =mysize, sf = mysf,ori = ori_right, color = mycol)
 
 setTimePoint=TimePoint[0][0]
 i=1                       #counter to determine which speed to use.
@@ -112,23 +113,23 @@ while True:
     #DEBUG: print timer.getTime()
 	mygrat1.setPhase(myvel, '+')
 	mygrat1.draw()
-	mygrat3.setPhase(myvel, '+')
-	mygrat3.draw()
-	mygrat4.setPhase(myvel, '+')
-	mygrat4.draw()
-	mygrat5.setPhase(myvel, '+')
-	mygrat5.draw()
+	#mygrat3.setPhase(myvel, '+')
+	#mygrat3.draw()
+	#mygrat4.setPhase(myvel, '+')
+	#mygrat4.draw()
+	#mygrat5.setPhase(myvel, '+')
+	#mygrat5.draw()
 
 	mywin1.flip()
-	mywin3.flip()
-	mywin4.flip()
-	mywin5.flip()
+	#mywin3.flip()
+	#mywin4.flip()
+	#mywin5.flip()
 
 	for keys in event.getKeys(timeStamped=True):
 		if keys[0] in ['escape','q']:             #Quiting
 			mywin1.close()
-			mywin3.close()
-			mywin4.close()
-			mywin5.close()
+			#mywin3.close()
+			#mywin4.close()
+			#mywin5.close()
 			core.quit()
             #TODO: break

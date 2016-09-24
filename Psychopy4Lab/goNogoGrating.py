@@ -41,12 +41,12 @@ timeLog				to log the start time in order to align the time line
 logPath				custom log file path
 
 '''
-def goNogoGrating(TaskSerial=[], windowDuration=10, gratingDuration=5, defaultVel=0.1, timeLog=True, logPath=None):
+def goNogoGrating(TaskSerial=[], windowDuration=10, gratingDuration=5, defaultVel=0.1, timeLog=True, logPath=None, gratingColor_Grating=[0.7,0.7,0.7]):
 	gratingSize=400
 	gratingSpatialFreq=0.06
 	gratingTex='sqr'
 	gratingMask='None'
-	gratingColor_Grating=[0.7,0.7,0.7]
+#	gratingColor_Grating=[0.7,0.7,0.7]
 	gratingColor_Window=[0,0,0]
 	timeCycle=1
 	#defaultVel=0.1
@@ -72,7 +72,7 @@ def goNogoGrating(TaskSerial=[], windowDuration=10, gratingDuration=5, defaultVe
 	i=1
 	j=1
 	length=len(TaskSerial)
-	sysMessage='Start\n1/'+str(length)+'\nwindow epoch\nnext set point: 10'
+	sysMessage='Start\n1/'+str(length)+'\nwindow epoch\nnext set point: '+str(windowDuration)
 
 	if timeLog:
 		gadget.logMessage(task='ExcelTimeTag')
@@ -83,10 +83,14 @@ def goNogoGrating(TaskSerial=[], windowDuration=10, gratingDuration=5, defaultVe
 		#10*i+5*(i-1)
 		if i<=len(TaskSerial):
 			if timer.getTime()>j*(windowDuration+gratingDuration)-gratingDuration:
-				sysMessage=str(j)+'/'+str(len(TaskSerial))+'\n'
-				sysMessage+='grating epoch\n'
-				sysMessage+='next set point: '+str(j*(windowDuration+gratingDuration))
-				vel=defaultVel*TaskSerial[j-1]
+
+				try:
+					sysMessage=str(j)+'/'+str(len(TaskSerial))+'\n'
+					sysMessage+='grating epoch'+str(TaskSerial[j-1])+'\n'
+					sysMessage+='next set point: '+str(j*(windowDuration+gratingDuration))
+					vel=defaultVel*TaskSerial[j-1]
+				except IndexError, e:
+					vel=defaultVel
 
 				grat1.color=gratingColor_Grating
 				grat3.color=gratingColor_Grating
@@ -107,12 +111,13 @@ def goNogoGrating(TaskSerial=[], windowDuration=10, gratingDuration=5, defaultVe
 				i+=1
 		elif i<=j:
 			sysMessage='finished'
+
 			grat1.color=gratingColor_Window
 			grat3.color=gratingColor_Window
 			grat4.color=gratingColor_Window
 			grat5.color=gratingColor_Window
-			i+=1
 
+			i+=1
 		#os.system('cls')
 		gadget.cleanScreen()
 		print sysMessage
