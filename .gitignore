@@ -4,3 +4,8 @@
 #python
 *.pyc
 test*
+
+#debug
+*.csv
+*~
+\#*\#
