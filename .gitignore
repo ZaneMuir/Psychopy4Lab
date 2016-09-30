@@ -9,3 +9,8 @@ test*
 *.csv
 *~
 \#*\#
+*.txt
+*.xlsx
+*.docx
+*.doc
+*.xls
