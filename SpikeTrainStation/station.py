@@ -8,7 +8,10 @@
 import os, sys, re
 import spike_filter 
 #  import spike_filter.spike_filter(in_file, t_step=1.0,limit=99999,out_file=None) --> dict
-
+import spike_summary
+#  import spike_summary.getSummary(channel_dir,speed_fun=void_func,t_step=1.0,limit=300) --> void
+import fartek
+#  import speed_func
 
 def getChannel(working_dir=os.getcwd()):
     channel_files = []
@@ -32,3 +35,5 @@ if __name__ == '__main__':
 
         for each_session in sessions:
             spike_filter.spike_filter(os.path.join(os.path.join(os.getcwd(),each_channel),each_session),out_file=os.path.join(os.path.join(os.getcwd(),each_channel),os.path.splitext(each_session)[0]+'.csv'))
+
+        spike_summary.getSummary(os.path.join(os.getcwd(),each_channel),speed_func=fartek.sin_wave)
