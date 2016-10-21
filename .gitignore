@@ -14,3 +14,5 @@ test*
 *.docx
 *.doc
 *.xls
+#analysis
+*.png

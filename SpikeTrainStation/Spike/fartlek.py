@@ -6,8 +6,7 @@ fartlek_seq = [
 (2,30,30),(1.5,60,30),(1.5,30,30),(1,60,30),(2,30,30),
 (2,30,30),(1.5,60,30),(1.5,30,30),(1,60,30),(2,30,30),(2,30,)]
 
-def sin_wave(time_tag,raw_vel=20):
-	global fartlek_seq 
+def sin_wave(time_tag,raw_vel=20,fartlek_seq=[(2,30,)]):
 	#debug_counter = 1
 	time_set = 0
 	for seq_item in fartlek_seq:
