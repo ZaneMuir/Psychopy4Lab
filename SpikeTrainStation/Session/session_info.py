@@ -95,7 +95,7 @@ def getPathData(index, path_data,time_seq, visual_seq, t_v, t_p):
 
     return speed_data
 
-if __name__ == '__main__':
+def main():
     corridor_time = []
     psychopy_time = []
     pathdata_file = []
@@ -123,3 +123,6 @@ if __name__ == '__main__':
         for item in speed_data:
             f.write('%s,%s,%s\n'%(str(item[0]),str(item[1]),str(item[2])))
         f.close()
+
+if __name__ == '__main__':
+    main()

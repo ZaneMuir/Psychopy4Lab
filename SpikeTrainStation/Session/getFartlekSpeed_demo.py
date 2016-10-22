@@ -19,7 +19,7 @@ fartlek_seq = [
 # fartlek(time_tag,v_0=20,fartlek_seq=[(2,30,)])
 # --> visual_speed (float)
 # 调用时time_tag表示所求的时刻(单位为s)
-# fartlek_seq为所求的参数列表
+# fartlek_seq为所求的参数列表，从每天数据的py文档中可以获得。
 # v_0为20cm per sec，不需要改动
 def fartlek(time_tag,v_0=20,fartlek_seq=[(2,30,)]):
 	time_set = 0

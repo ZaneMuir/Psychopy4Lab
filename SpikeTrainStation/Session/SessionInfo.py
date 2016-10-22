@@ -28,13 +28,7 @@ def getPathDataFileNames(target_dir=os.getcwd()):
     return pathDataFileNames
 
 
-if __name__ == '__main__':
-    # main
-    if len(sys.argv) == 2:
-        target_dir = sys.argv[1]
-    else:
-        target_dir = os.getcwd()
-
+def main(target_dir=os.getcwd()):
     # make session info dir
     session_count = cleanDir(target_dir)
 
@@ -64,3 +58,5 @@ if __name__ == '__main__':
         #TODO:output
         writeSession(time_limit=testSetting.time_limit, visual_speed=visual_speed, motor_speed=running_speed,index=index, working_dir=target_dir)
         print 'wrote',corridorFileNames[index]
+if __name__ == '__main__':
+    main()
