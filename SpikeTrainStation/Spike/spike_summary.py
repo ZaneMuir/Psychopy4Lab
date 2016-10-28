@@ -10,11 +10,12 @@ def void_func(anyParam=None):
     return 1
 
 def getSummary(channel_dir,t_step=1,limit=300,speed_func=void_func):
+
     session_data = getSession(channel_dir)
 
     summary = []
     spike_data = []
-    
+
     for each_session in session_data:
         f = open(os.path.join(channel_dir,each_session),'r')
         each_session_data = {}
@@ -29,11 +30,11 @@ def getSummary(channel_dir,t_step=1,limit=300,speed_func=void_func):
 
 
 #    print spike_data
-        
+
     time_counter = 1.0
 
     summary = 'time,%saverage,speed\n'%('each_session,'*len(spike_data)) #header
-    
+
     while time_counter <= limit:
         entry = str(time_counter)+','
         average_sum = 0
@@ -45,11 +46,11 @@ def getSummary(channel_dir,t_step=1,limit=300,speed_func=void_func):
             except KeyError:
                 entry += '0,'
                 average_sum += 0
-           
+
         entry += str(average_sum/float(len(spike_data)))+','
         entry += str(speed_func(time_counter))
         summary += entry+'\n'
-        
+
         time_counter += t_step
 
     f = open(os.path.join(channel_dir,'summary.csv'),'w')

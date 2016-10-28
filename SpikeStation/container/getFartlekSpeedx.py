@@ -22,31 +22,37 @@ fartlek_seq = [
 # fartlek_seq为所求的参数列表，从每天数据的py文档中可以获得。
 # v_0为20cm per sec，不需要改动
 def fartlek(time_tag,v_0=20,fartlek_seq=[(2,30,)]):
-	time_set = 0
+    #print 'here'
+    #print time_tag,fartlek_seq
+    time_set = 0
+    for seq_item in fartlek_seq:
+        try:
+            current_seq_time = seq_item[2]
+        except IndexError:
+            current_seq_time = 9999
 
-	for seq_item in fartlek_seq:
-		try:
-			current_seq_time = seq_item[2]
-		except IndexError:
-			current_seq_time = 9999
+        time_set += current_seq_time
 
-		time_set += current_seq_time
-
-		if time_tag < time_set:
-			v_x = v_0*seq_item[0]**math.sin(2*math.pi/seq_item[1]*(time_tag+current_seq_time-time_set))
-			#
-			#equation:
-			#v(x) = v_0 * A^{sin(2*pi/T*x)}
-			#
-			return v_x
-		else:
-			#debug_counter += 1
-			continue
+        if time_tag < time_set:
+            v_x = v_0*seq_item[0]**math.sin(2*math.pi/seq_item[1]*(time_tag+current_seq_time-time_set))
+            #
+            #equation:
+            #v(x) = v_0 * A^{sin(2*pi/T*x)}
+            #
+            return v_x
+        else:
+            #debug_counter += 1
+            continue
 
 
 if __name__ == '__main__':
-	#test
-	for i in range(60):
-		print sin_wave(i)
-	#lab.gratingFourWindows(task_sequence,vel_func=vel_function)
-	#default value of defaultVel is 0.1, which means 20 cm per sec in reality.
+    #test
+    timeSet = [0,299,1]
+    time_setoff = 12.000
+    fartlek_seq = [(2,30,30),(1.5,60,30),(1.5,30,30),(1,60,30),(2,30,30),(2,30,30),(1.5,60,30),(1.5,30,30),(1,60,30),(2,30,30),(2,30,)]
+
+    for time_tag in range(timeSet[0],timeSet[1]-timeSet[2],timeSet[2]):
+        speed = fartlek(time_setoff+time_tag+0.5,fartlek_seq=fartlek_seq)
+        print speed
+    #lab.gratingFourWindows(task_sequence,vel_func=vel_function)
+    #default value of defaultVel is 0.1, which means 20 cm per sec in reality.
