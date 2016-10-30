@@ -2,9 +2,10 @@
 #  Created by Zane Muir
 #  Copyright (c) 2016 ZaneMuir. All rights reserved.
 #
+#
 
 class IDClass(object):
-    """docstring for IDClass."""
+    """docstring for IDClass"""
     def __init__(self, l1,l2,l3):
         super(IDClass, self).__init__()
         self.lvl1 = l1

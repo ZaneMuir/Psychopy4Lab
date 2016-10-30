@@ -98,16 +98,17 @@ class Speed(object):
         return
 
     def formatSpeed(self,csvPath, corridorPath, timeSet = [0,300,1],fartlek_seq=[(2,30,)]):
-        self.setID(csvPath)
-        self.formatMotor(csvPath,corridorPath,timeSet=timeSet)
-        self.formatVisual(os.path.split(csvPath)[0],timeSet=timeSet,fartlek_seq=fartlek_seq)
+        self.setID(csvPath) #设置ID号
+        self.formatMotor(csvPath,corridorPath,timeSet=timeSet) #处理运动速度
+        self.formatVisual(os.path.split(csvPath)[0],timeSet=timeSet,fartlek_seq=fartlek_seq) #处理视觉速度
 
     def formatMotor(self,csvPath ,corridorPath ,timeSet = [0,300,1]):
         raw_data = []
 
-        self.corridorStart = getCorridorTime(corridorPath)
+        self.corridorStart = getCorridorTime(corridorPath) #获得VR系统开始运行的时刻点
 
         with open(csvPath,'r') as csvfile:
+            #获得PathData的数据，主要获取其中的DateTime，xPosComp，yPosComp数据，并写入raw_data中保存
             reader = csv.DictReader(csvfile,delimiter=';')
             for row in reader:
                 raw_data.append((timeSwitch(float(row['DateTime']),self.corridorStart),float(row['xPosComp']),float(row['yPosComp'])))
@@ -117,8 +118,9 @@ class Speed(object):
         speed_result = {}
 
         for point in raw_data:
+            #计算指定时间间隔的位移，并以起点和终点的位置计算对应的算术平均速度。单位为厘米每秒。
             if point[0] >= time_stamp:
-                #NOTE: the speed algorithm
+                #NOTE: the speed algorithm: ignore the xPosComp
                 speed = (point[2]-previous_pos)/timeSet[2]/100
                 speed_result[int(time_stamp)] = speed
                 previous_pos = point[2]
@@ -130,17 +132,18 @@ class Speed(object):
         self.Motor = speed_result
 
     def formatVisual(self, work_dir, timeSet=[0,300,1],fartlek_seq=[(2,30,)]):
+        #计算PsychoPy的启动时间和VR启动时间的差值
         time_setoff = self.corridorStart - timeSwitch(getPsychoPyTime(work_dir,int(self.ID.getLevel2())-1))
         speed_result = {}
         for time_tag in range(timeSet[0],timeSet[1]-timeSet[2],timeSet[2]):
-            speed = getFartlekSpeedx.fartlek(time_setoff+time_tag+0.5,fartlek_seq=fartlek_seq)
+            speed = getFartlekSpeedx.fartlek(time_setoff+time_tag+0.5,fartlek_seq=fartlek_seq) #调用Fartlek函数
             #print speed
             speed_result[time_tag+1] = speed
 
         self.Visual = speed_result
 
     def csvSpeed(self, out_path):
-
+        #输出运动数据
         with open(os.path.join(out_path,self.ID.getSessionID()+'.csv'),'w') as csvfile:
             fieldnames = ['time', 'visual','motor']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -150,6 +153,7 @@ class Speed(object):
                 writer.writerow({'time':str(key), 'visual':str(value), 'motor':self.Motor[key+1]})
 
     def arrayMotor(self):
+        #格式化数据，以进行scikitlearn的算法和pyplot的算法
         cup = []
         for key, value in self.Motor.items():
             cup.append([value])
@@ -157,6 +161,7 @@ class Speed(object):
         #return np.array(cup)
 
     def arrayVisual(self):
+        #格式化数据，以进行scikitlearn的算法和pyplot的算法
         cup = []
         for key, value in self.Visual.items():
             cup.append([value])

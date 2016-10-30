@@ -4,11 +4,13 @@
 #
 
 import os,re
-import json
+import json, csv
 from container import spike,speed
 from summary import neuron
+import math
 
 setting_path = '/Users/zane/Desktop/ProjectE/Psychopy4Lab/SpikeStation/setting.json'
+#TODO: 将setting的内容用json的格式保存与修改。
 setting ={
 "fartlek":[(2,30,30),(1.5,60,30),(1.5,30,30),(1,60,30),(2,30,30),(2,30,30),(1.5,60,30),(1.5,30,30),(1,60,30),(2,30,30),(2,30,)],
 "time_limit":[0,300,1],
@@ -108,13 +110,28 @@ def main(work_dir=os.getcwd()):
         neuron_temp = neuron.Neuron(each_spike.ID.getID())
         verySession = None
         for item in session_pool.values():
+            #print item.ID.getSessionID(),each_spike.ID.getSessionID()
             if item.ID.getSessionID() == each_spike.ID.getSessionID():
                 verySession = item
                 break
+        if verySession is None:
+            continue
 
         neuron_temp.setData(each_spike.arraySpike(),verySession.arrayVisual(),each_spike.arraySpike(),verySession.arrayMotor())
         neuron_temp.fitForest()
-        print 'theta:',neuron_temp.inter_angle
+        neuron_pool.append(neuron_temp)
+        #print 'theta:',neuron_temp.inter_angle
+    print 'analyze neuron:',len(neuron_pool)
+
+    if not os.path.isdir(os.path.join(work_dir,'summary')):
+        os.mkdir(os.path.join(work_dir,'summary'))
+
+    with open(os.path.join(work_dir,'summary/summary.csv'),'w') as csvfile:
+        fieldnames = ['session', 'pp','angle']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for item in neuron_pool:
+            writer.writerow({'session':item.name, 'pp':item.PP, 'angle':item.inter_angle/math.pi*180})
     #TODO:
 
 
