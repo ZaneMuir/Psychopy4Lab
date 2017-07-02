@@ -1,3 +1,5 @@
+#/usr/bin/env python
+#encoding:utf-8
 #
 #  Created by Zane Muir
 #  Copyright (c) 2016 ZaneMuir. All rights reserved.
@@ -149,8 +151,9 @@ class Speed(object):
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
 
-            for key,value in self.Visual.items():
-                writer.writerow({'time':str(key), 'visual':str(value), 'motor':self.Motor[key+1]})
+            #TODO::
+            #for key,value in self.Visual.items():
+            #    writer.writerow({'time':str(key), 'visual':str(value), 'motor':self.Motor[key+1]})
 
     def arrayMotor(self):
         #格式化数据，以进行scikitlearn的算法和pyplot的算法

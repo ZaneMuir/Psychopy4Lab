@@ -1,4 +1,5 @@
-#
+#/usr/bin/env python
+#encoding:utf-8
 #  Created by Zane Muir
 #  Copyright (c) 2016 ZaneMuir. All rights reserved.
 #
@@ -118,7 +119,7 @@ def main(work_dir=os.getcwd()):
             continue
 
         neuron_temp.setData(each_spike.arraySpike(),verySession.arrayVisual(),each_spike.arraySpike(),verySession.arrayMotor())
-        neuron_temp.fitForest()
+        neuron_temp.fitForest(train_len=0.8)
         neuron_pool.append(neuron_temp)
         #print 'theta:',neuron_temp.inter_angle
     print 'analyze neuron:',len(neuron_pool)
@@ -127,11 +128,21 @@ def main(work_dir=os.getcwd()):
         os.mkdir(os.path.join(work_dir,'summary'))
 
     with open(os.path.join(work_dir,'summary/summary.csv'),'w') as csvfile:
-        fieldnames = ['session', 'pp','angle']
+        fieldnames = ['session', 'pp','R^2_v','R^2_m','angle']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for item in neuron_pool:
-            writer.writerow({'session':item.name, 'pp':item.PP, 'angle':item.inter_angle/math.pi*180})
+            writer.writerow({'session':item.name, 'pp':item.PP, 'R^2_v':item.fitScore_VF,'R^2_m':item.fitScore_RS,'angle':item.inter_angle/math.pi*180})
+            item.imgPro(os.path.join(work_dir,'summary'))
+
+    #for item in neuron_pool:
+    #    with open(os.path.join(work_dir,'summary/%s.csv'%item.name),'w') as csvfile:
+    #        fieldnames = ['spike','visual_test','visual_data','motor_test','motor_data']
+    #        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    #        writer.writeheader()
+#
+#            for subitem in item.
+
     #TODO:
 
 

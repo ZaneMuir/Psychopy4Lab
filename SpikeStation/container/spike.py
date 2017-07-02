@@ -1,3 +1,5 @@
+#/usr/bin/env python
+#encoding:utf-8
 #
 #  Created by Zane Muir
 #  Copyright (c) 2016 ZaneMuir. All rights reserved.

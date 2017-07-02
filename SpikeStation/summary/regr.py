@@ -1,3 +1,6 @@
+#/usr/bin/env python
+#encoding:utf-8
+
 from skl_angle import main as skl
 import os, re, math
 import numpy as np
